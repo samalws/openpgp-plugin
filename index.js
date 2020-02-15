@@ -6,6 +6,7 @@ module.exports.pgp = {
     const data = openpgp.util.encode_utf8(payload)
     const message = openpgp.message.fromBinary(data)
     const privateKeys = (await openpgp.key.readArmored(secretKey)).keys
+    await privateKeys[0].decrypt(window.keyPass)
     let { signature } = await openpgp.sign({
       message,
       privateKeys,
